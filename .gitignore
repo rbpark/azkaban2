@@ -2,7 +2,6 @@ dist/
 build/
 .gradle/
 .settings/
-node_modules/
 .idea/
 *.iml
 *.log

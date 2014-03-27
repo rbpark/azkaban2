@@ -1,0 +1,23 @@
+apply plugin: 'java'
+
+jar {
+    baseName =  'azkaban-core'
+    manifest {
+      attributes(
+        'Implementation-Title': 'Azkaban Commons',
+        'Implementation-Version': version
+      )
+    }
+}
+
+sourceSets {
+    main {
+         java {
+            srcDir 'src/java'
+         }
+         resources {
+            srcDir 'src/resources'
+         }
+    }
+}
+

@@ -12,7 +12,7 @@ import azkaban.utils.JSONUtils;
 
 public class JsonUtilsTest {
 	@Test
-	public void writePropsNoJarDependencyTest1() throws IOException {
+	public void testWritePropsNoJarDependency() throws IOException {
 		Map<String, String> test = new HashMap<String,String>();
 		test.put("\"myTest\n\b", "myValue\t\\");
 		test.put("normalKey", "Other key");
@@ -29,7 +29,7 @@ public class JsonUtilsTest {
 	}
 	
 	@Test
-	public void writePropsNoJarDependencyTest2() throws IOException {
+	public void testWritePropsNoJarDependency() throws IOException {
 		Map<String, String> test = new HashMap<String,String>();
 		test.put("\"myTest\n\b", "myValue\t\\");
 		

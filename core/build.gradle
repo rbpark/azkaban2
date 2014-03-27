@@ -10,6 +10,13 @@ jar {
     }
 }
 
+dependencies {
+    compile (
+        [group: 'commons-collections', name:'commons-collections', version: '3.2.1'],
+        [group: 'com.google.guava', name:'guava', version: '16.0.1'] 
+    )
+}
+
 sourceSets {
     main {
          java {
@@ -17,6 +24,14 @@ sourceSets {
          }
          resources {
             srcDir 'src/resources'
+         }
+    }
+    test {
+         java {
+            srcDir 'test/java'
+         }
+         resources {
+            srcDir 'test/resources'
          }
     }
 }

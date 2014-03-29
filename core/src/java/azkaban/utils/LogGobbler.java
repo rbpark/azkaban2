@@ -23,26 +23,21 @@ import java.io.Reader;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
-import com.google.common.base.Joiner;
-
 /**
  * Gobbler for Buffer
- * Reads the input and logs every line. Also has a circular buffer to 
- * view recent logs.
- *  
+ * Reads the input and logs every line. 
+ * 
  * Useful for attaching to stderr or stdout of a process
  */
 public class LogGobbler extends Thread {
 	private final BufferedReader inputReader;
 	private final Logger logger;
 	private final Level loggingLevel;
-	private final CircularBuffer<String> buffer;
 
-	public LogGobbler(final Reader inputReader, final Logger logger, final Level level, final int bufferLines) {
+	public LogGobbler(final Reader inputReader, final Logger logger, final Level level) {
 		this.inputReader = new BufferedReader(inputReader);
 		this.logger = logger;
 		this.loggingLevel = level;
-		buffer = new CircularBuffer<String>(bufferLines);
 	}
 
 	@Override
@@ -53,8 +48,6 @@ public class LogGobbler extends Thread {
 				if (line == null) {
 					return;
 				}
-
-				buffer.append(line);
 				log(line);
 			}
 		} catch (IOException e) {
@@ -87,9 +80,4 @@ public class LogGobbler extends Thread {
 			info("I/O thread interrupted.", e);
 		}
 	}
-
-	public String getRecentLog() {
-		return Joiner.on(System.getProperty("line.separator")).join(buffer);
-	}
-
 }

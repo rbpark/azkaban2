@@ -23,10 +23,11 @@ import java.util.List;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterators;
 
-
 /**
  * A circular buffer of items of a given length. It will grow up to the give size as items are appended, then
  * it will begin to overwrite older items.
+ * 
+ * This buffer is not thread-safe.
  *
  * @param <T> The type of the item contained.
  */
@@ -36,20 +37,12 @@ public class CircularBuffer<T> implements Iterable<T> {
 	private final int size;
 	private int start;
 	
-	/**
-	 * Constructor
-	 * @param size
-	 */
 	public CircularBuffer(int size) {
 		this.lines = new ArrayList<T>();
 		this.size = size;
 		this.start = 0;
 	}
 	
-	/**
-	 * Appends object to the buffer
-	 * @param line
-	 */
 	public void append(T line) {
 		if(lines.size() < size) {
 			lines.add(line);
@@ -71,18 +64,10 @@ public class CircularBuffer<T> implements Iterable<T> {
 			return Iterators.concat(lines.subList(start, lines.size()).iterator(), lines.subList(0, start).iterator());
 	}
 	
-	/**
-	 * Returns the capacity of the buffer
-	 * @return
-	 */
 	public int getMaxSize() {
 	    return this.size;
 	}
 	
-	/**
-	 * Returns the current size of the buffer.
-	 * @return
-	 */
 	public int getSize() {
 	    return this.lines.size();
 	}

@@ -23,6 +23,7 @@ import org.apache.commons.io.IOUtils;
  * A util helper class for Compress data
  */
 public class CompressUtils {
+	
 	private CompressUtils() {
 	}
 	

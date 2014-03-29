@@ -7,7 +7,7 @@ import azkaban.utils.cache.Cache;
 import azkaban.utils.cache.Cache.EjectionPolicy;
 import azkaban.utils.cache.CacheManager;
 
-public class CacheTest {
+public class CacheManagerTest {
 	@Test
 	public void testLRU() {
 		Cache cache = CacheManager.createCache();

@@ -57,6 +57,11 @@ public class Pair<F, S> {
 	}
 
 	@Override
+	public String toString() {
+		return "{" + (first == null? "null" : first.toString()) + "," + (second == null? "null" : second.toString()) + "}";
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -86,10 +91,5 @@ public class Pair<F, S> {
 		} else if (!second.equals(other.second))
 			return false;
 		return true;
-	}
-	
-	@Override
-	public String toString() {
-		return "{" + first.toString() + "," + second.toString() + "}";
 	}
 }

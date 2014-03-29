@@ -11,11 +11,44 @@ import org.joda.time.Weeks;
 import org.joda.time.Years;
 
 /**
- * A generally useless utils except that it parses duration
+ * Utils for formatting values
  */
-public class TimeUtils {
-	private TimeUtils() {
+public class FormatUtils {
+	private FormatUtils() {
 	}
+	
+	/**
+	 * Attempts to convert an object (string or number) to a Double
+	 * @param obj
+	 * @return
+	 */
+	public static Double convertToDouble(Object obj) {
+		if (obj instanceof String) {
+			return Double.parseDouble((String) obj);
+		}
+		else if (obj instanceof Number) {
+			return ((Number)obj).doubleValue();
+		}
+
+		return (Double) obj;
+	}
+	
+	/**
+	 * Attempts to convert an object (string or number) to a Double
+	 * @param obj
+	 * @return
+	 */
+	public static Long convertToLong(Object obj) {
+		if (obj instanceof String) {
+			return Long.valueOf((String)obj);
+		}
+		else if (obj instanceof Number) {
+			return ((Number)obj).longValue();
+		}
+		
+		return (Long)obj;
+	}
+	
 	
 	/**
 	 * Parses a String and creates a ReadablePeriod 

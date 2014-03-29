@@ -920,8 +920,7 @@ public class Props {
 		}
 
 		Props p = (Props) o;
-		return _current.equals(p._current)
-				&& IOUtils.equals(this._parent, p._parent);
+		return _current.equals(p._current) && equals(this._parent, p._parent);
 	}
 
 	/**
@@ -987,5 +986,21 @@ public class Props {
 
 	public void setParent(Props prop) {
 		this._parent = prop;
+	}
+	
+	/**
+	 * Equivalent to Object.equals except that it handles nulls. If a and b are
+	 * both null, true is returned.
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	private static boolean equals(Object a, Object b) {
+		if (a == null || b == null) {
+			return a == b;
+		}
+
+		return a.equals(b);
 	}
 }

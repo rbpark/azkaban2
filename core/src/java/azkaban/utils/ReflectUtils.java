@@ -37,8 +37,9 @@ public class ReflectUtils {
 	 */
 	public static Class<?>[] getTypes(Object... args) {
 		Class<?>[] argTypes = new Class<?>[args.length];
-		for (int i = 0; i < argTypes.length; i++)
+		for (int i = 0; i < argTypes.length; i++) {
 			argTypes[i] = args[i].getClass();
+		}
 		return argTypes;
 	}
 
@@ -61,8 +62,7 @@ public class ReflectUtils {
 	 * @param args The arguments
 	 * @return The constructed object
 	 */
-	public static <T> T callConstructor(Class<T> c, Class<?>[] argTypes,
-			Object[] args) {
+	public static <T> T callConstructor(Class<T> c, Class<?>[] argTypes, Object[] args) {
 		try {
 			Constructor<T> cons = c.getConstructor(argTypes);
 			return cons.newInstance(args);

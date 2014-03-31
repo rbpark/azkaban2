@@ -1,11 +1,9 @@
 package azkaban.utils.cache;
 
-import org.junit.Assert;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
-import azkaban.utils.cache.Cache;
 import azkaban.utils.cache.Cache.EjectionPolicy;
-import azkaban.utils.cache.CacheManager;
 
 public class CacheManagerTest {
 	@Test
@@ -19,19 +17,19 @@ public class CacheManagerTest {
 		cache.insertElement("key3", "val3");
 		cache.insertElement("key4", "val4");
 
-		Assert.assertEquals(cache.get("key2"), "val2");
-		Assert.assertEquals(cache.get("key3"), "val3");
-		Assert.assertEquals(cache.get("key4"), "val4");
-		Assert.assertEquals(cache.get("key1"), "val1");
-		Assert.assertEquals(4, cache.getSize());
+		assertEquals(cache.get("key2"), "val2");
+		assertEquals(cache.get("key3"), "val3");
+		assertEquals(cache.get("key4"), "val4");
+		assertEquals(cache.get("key1"), "val1");
+		assertEquals(4, cache.getSize());
 
 		cache.insertElement("key5", "val5");
-		Assert.assertEquals(4, cache.getSize());
-		Assert.assertEquals(cache.get("key3"), "val3");
-		Assert.assertEquals(cache.get("key4"), "val4");
-		Assert.assertEquals(cache.get("key1"), "val1");
-		Assert.assertEquals(cache.get("key5"), "val5");
-		Assert.assertNull(cache.get("key2"));
+		assertEquals(4, cache.getSize());
+		assertEquals(cache.get("key3"), "val3");
+		assertEquals(cache.get("key4"), "val4");
+		assertEquals(cache.get("key1"), "val1");
+		assertEquals(cache.get("key5"), "val5");
+		assertNull(cache.get("key2"));
 	}
 
 	@Test
@@ -51,19 +49,19 @@ public class CacheManagerTest {
 		cache.insertElement("key3", "val3");
 		cache.insertElement("key4", "val4");
 
-		Assert.assertEquals(cache.get("key2"), "val2");
-		Assert.assertEquals(cache.get("key3"), "val3");
-		Assert.assertEquals(cache.get("key4"), "val4");
-		Assert.assertEquals(cache.get("key1"), "val1");
-		Assert.assertEquals(4, cache.getSize());
+		assertEquals(cache.get("key2"), "val2");
+		assertEquals(cache.get("key3"), "val3");
+		assertEquals(cache.get("key4"), "val4");
+		assertEquals(cache.get("key1"), "val1");
+		assertEquals(4, cache.getSize());
 
 		cache.insertElement("key5", "val5");
-		Assert.assertEquals(4, cache.getSize());
-		Assert.assertEquals(cache.get("key3"), "val3");
-		Assert.assertEquals(cache.get("key4"), "val4");
-		Assert.assertEquals(cache.get("key2"), "val2");
-		Assert.assertEquals(cache.get("key5"), "val5");
-		Assert.assertNull(cache.get("key1"));
+		assertEquals(4, cache.getSize());
+		assertEquals(cache.get("key3"), "val3");
+		assertEquals(cache.get("key4"), "val4");
+		assertEquals(cache.get("key2"), "val2");
+		assertEquals(cache.get("key5"), "val5");
+		assertNull(cache.get("key1"));
 	}
 
 	@Test
@@ -82,7 +80,7 @@ public class CacheManagerTest {
 			} catch (InterruptedException e) {
 			}
 		}
-		Assert.assertEquals(cache.get("key1"), "val1");
+		assertEquals(cache.get("key1"), "val1");
 		cache.insertElement("key2", "val2");
 		synchronized (this) {
 			try {
@@ -90,8 +88,8 @@ public class CacheManagerTest {
 			} catch (InterruptedException e) {
 			}
 		}
-		Assert.assertNull(cache.get("key1"));
-		Assert.assertEquals("val2", cache.get("key2"));
+		assertNull(cache.get("key1"));
+		assertEquals("val2", cache.get("key2"));
 
 		synchronized (this) {
 			try {
@@ -100,7 +98,7 @@ public class CacheManagerTest {
 			}
 		}
 
-		Assert.assertNull(cache.get("key2"));
+		assertNull(cache.get("key2"));
 	}
 
 	@Test
@@ -119,7 +117,7 @@ public class CacheManagerTest {
 			} catch (InterruptedException e) {
 			}
 		}
-		Assert.assertEquals(cache.get("key1"), "val1");
+		assertEquals(cache.get("key1"), "val1");
 		cache.insertElement("key2", "val2");
 		synchronized (this) {
 			try {
@@ -127,8 +125,8 @@ public class CacheManagerTest {
 			} catch (InterruptedException e) {
 			}
 		}
-		Assert.assertEquals("val1", cache.get("key1"));
-		Assert.assertNull(cache.get("key3"));
+		assertEquals("val1", cache.get("key1"));
+		assertNull(cache.get("key3"));
 		synchronized (this) {
 			try {
 				wait(1000);
@@ -136,6 +134,6 @@ public class CacheManagerTest {
 			}
 		}
 
-		Assert.assertNull(cache.get("key2"));
+		assertNull(cache.get("key2"));
 	}
 }

@@ -157,11 +157,20 @@ public class Props {
 		}
 	}
 	
+	/**
+	 * Adds the given Props to the earliest ancestor
+	 * 
+	 * @param parent
+	 */
 	public void setEarliestAncestor(Props parent) {
 		Props props = getEarliestAncestor();
 		props.setParent(parent);
 	}
 	
+	/**
+	 * Find the earliest ancestor
+	 * @return
+	 */
 	public Props getEarliestAncestor() {
 		if (_parent == null) {
 			return this;
@@ -234,6 +243,7 @@ public class Props {
 
 	/**
 	 * Return value if available in current Props otherwise return from parent
+	 * This will return null if the key doesn't exist.
 	 * 
 	 * @param key
 	 * @return
@@ -253,7 +263,7 @@ public class Props {
 	 * 
 	 * @return
 	 */
-	public Set<String> localKeySet() {
+	public Set<String> getLocalKeySet() {
 		return _current.keySet();
 	}
 
@@ -373,7 +383,7 @@ public class Props {
 	 * @param p
 	 */
 	public void putLocal(Props p) {
-		for (String key : p.localKeySet()) {
+		for (String key : p.getLocalKeySet()) {
 			this.put(key, p.get(key));
 		}
 	}
@@ -423,6 +433,15 @@ public class Props {
 		}
 	}
 
+	/**
+	 * Attempts to return the Class that corresponds to the Props value. If the
+	 * class doesn't exit, an IllegalArgumentException will be thrown.
+	 * 
+	 * @param key
+	 * @param initialize
+	 * @param cl
+	 * @return
+	 */
 	public Class<?> getClass(String key, boolean initialize, ClassLoader cl) {
 		try {
 			if (containsKey(key)) {
@@ -814,7 +833,7 @@ public class Props {
 	public void storeFlattened(OutputStream out) throws IOException {
 		Properties p = new Properties();
 		for (Props curr = this; curr != null; curr = curr.getParent()) {
-			for (String key : curr.localKeySet()) {
+			for (String key : curr.getLocalKeySet()) {
 				if (!p.containsKey(key)) {
 					p.setProperty(key, get(key));
 				}
@@ -840,7 +859,7 @@ public class Props {
 			}
 		}
 
-		for (String key : this.localKeySet()) {
+		for (String key : this.getLocalKeySet()) {
 			if (key.startsWith(prefix)) {
 				values.put(key.substring(prefix.length()), get(key));
 			}
@@ -856,7 +875,7 @@ public class Props {
 	public Set<String> getKeySet() {
 		HashSet<String> keySet = new HashSet<String>();
 
-		keySet.addAll(localKeySet());
+		keySet.addAll(getLocalKeySet());
 
 		if (_parent != null) {
 			keySet.addAll(_parent.getKeySet());
@@ -864,7 +883,7 @@ public class Props {
 
 		return keySet;
 	}
-
+	
 	/**
 	 * Logs the property in the given logger
 	 * 
@@ -900,15 +919,13 @@ public class Props {
 			priorNodeCopy = copyNext(source.getParent());
 		}
 		Props dest = new Props(priorNodeCopy);
-		for (String key : source.localKeySet()) {
+		for (String key : source.getLocalKeySet()) {
 			dest.put(key, source.get(key));
 		}
 
 		return dest;
 	}
 
-	/**
-     */
 	@Override
 	public boolean equals(Object o) {
 		if (o == this) {
@@ -945,9 +962,6 @@ public class Props {
 		return myKeySet.size() == p.getKeySet().size();
 	}
 
-	/**
-     * 
-     */
 	@Override
 	public int hashCode() {
 		int code = this._current.hashCode();
@@ -956,9 +970,6 @@ public class Props {
 		return code;
 	}
 
-	/**
-     * 
-     */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder("{");
@@ -976,16 +987,28 @@ public class Props {
 		return builder.toString();
 	}
 
+	/**
+	 * Returns the source of the Props if it exists
+	 * @return
+	 */
 	public String getSource() {
 		return source;
 	}
 
+	/**
+	 * Sets the source of the props
+	 * @param source
+	 */
 	public void setSource(String source) {
 		this.source = source;
 	}
 
-	public void setParent(Props prop) {
-		this._parent = prop;
+	/**
+	 * Sets, or overwrites the parent
+	 * @param prop
+	 */
+	public void setParent(Props parent) {
+		this._parent = parent;
 	}
 	
 	/**

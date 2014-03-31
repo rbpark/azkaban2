@@ -27,9 +27,9 @@ import java.util.zip.ZipFile;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.AfterClass;
 
 public class CompressUtilsTest {
 	private static HashSet<String> expectedFiles;
@@ -49,7 +49,7 @@ public class CompressUtilsTest {
 	
 	@AfterClass
 	public static void globalTearDown() throws Exception {
-		FileUtils.deleteDirectory(new File("build"));
+		FileUtils.deleteDirectory(tempDir);
 	}
 	
 	@Before

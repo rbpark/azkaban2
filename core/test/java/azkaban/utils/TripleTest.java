@@ -16,7 +16,7 @@
 
 package azkaban.utils;
 
-import org.junit.Assert;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -25,10 +25,10 @@ public class TripleTest {
 	public void testTriple() {
 		Triple<Integer, String, String> triple1 = new Triple<Integer, String, String>(0, "I'm A String", "boo");
 
-		Assert.assertEquals(new Integer(0), triple1.getFirst());
-		Assert.assertEquals(new String("I'm A String"), triple1.getSecond());
-		Assert.assertEquals(new String("boo"), triple1.getThird());
-		Assert.assertEquals(triple1, triple1);
+		assertEquals(new Integer(0), triple1.getFirst());
+		assertEquals(new String("I'm A String"), triple1.getSecond());
+		assertEquals(new String("boo"), triple1.getThird());
+		assertEquals(triple1, triple1);
 	}
 
 	@Test
@@ -36,46 +36,46 @@ public class TripleTest {
 		// triple 1 and triple 2 should be same in every way.
 		Triple<Integer, String, String> triple1 = new Triple<Integer, String, String>(0, "I'm A String", "boo");
 		Triple<Integer, String, String> triple2 = new Triple<Integer, String, String>(0, new String("I'm A String"), new String("boo"));
-		Assert.assertEquals(triple1, triple2);
-		Assert.assertEquals(triple1.hashCode(), triple2.hashCode());
+		assertEquals(triple1, triple2);
+		assertEquals(triple1.hashCode(), triple2.hashCode());
 
 		Triple<Integer, String, String> triple3 = new Triple<Integer, String, String>(
 				1, 
 				new String("I'm A String"),
 				new String("boo")
 		);
-		Assert.assertNotEquals(triple1, triple3);
+		assertNotEquals(triple1, triple3);
 
 		Triple<Integer, String, String> triple4 = new Triple<Integer, String, String>(
 				0,
 				new String("I'm A Str1ng"),
 				new String("boo")
 		);
-		Assert.assertNotEquals(triple1, triple4);
+		assertNotEquals(triple1, triple4);
 		
 		Triple<Integer, String, String> triple5 = new Triple<Integer, String, String>(
 				0,
 				new String("I'm A String"),
 				new String("boon")
 		);
-		Assert.assertNotEquals(triple1, triple5);
+		assertNotEquals(triple1, triple5);
 	}
 	
 	@Test
 	public void testTripleNull() {
 		Triple<Integer, Integer, Integer> triple1 = new Triple<Integer, Integer, Integer>(0, 0, null);
 		Triple<Integer, Integer, Integer> triple2 = new Triple<Integer, Integer, Integer>(0, 0, null);
-		Assert.assertEquals(triple1, triple2);
-		Assert.assertEquals(triple1.hashCode(), triple2.hashCode());
+		assertEquals(triple1, triple2);
+		assertEquals(triple1.hashCode(), triple2.hashCode());
 		
 		Triple<Integer, Integer, Integer> triple3 = new Triple<Integer, Integer, Integer>(0, null, 0);
 		Triple<Integer, Integer, Integer> triple4 = new Triple<Integer, Integer, Integer>(0, null, 0);
-		Assert.assertEquals(triple3, triple4);
-		Assert.assertEquals(triple3.hashCode(), triple4.hashCode());
+		assertEquals(triple3, triple4);
+		assertEquals(triple3.hashCode(), triple4.hashCode());
 
 		Triple<Integer, Integer, Integer> triple5 = new Triple<Integer, Integer, Integer>(null, 0, 0);
 		Triple<Integer, Integer, Integer> triple6 = new Triple<Integer, Integer, Integer>(null, 0, 0);
-		Assert.assertEquals(triple5, triple6);
-		Assert.assertEquals(triple5.hashCode(), triple6.hashCode());
+		assertEquals(triple5, triple6);
+		assertEquals(triple5.hashCode(), triple6.hashCode());
 	}
 }

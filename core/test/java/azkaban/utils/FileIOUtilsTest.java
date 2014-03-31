@@ -5,13 +5,11 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.io.FileUtils;
+
+import static org.junit.Assert.*;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import azkaban.utils.FileIOUtils;
-import azkaban.utils.Pair;
 
 public class FileIOUtilsTest {
 	private static File tempDir = new File("build/symlinkTest");
@@ -28,8 +26,17 @@ public class FileIOUtilsTest {
 	}
 
 	@Test
-	public void testSymlinkCopy() throws IOException {
-		FileIOUtils.createDeepSymlink(sourceDir, tempDir);
+	public void testSymlinkCopy() {
+		boolean exception = false;
+		try {
+			FileIOUtils.createDeepSymlink(sourceDir, tempDir);
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+			System.out.println("Handled this case nicely.");
+			exception = true;
+		}
+		
+		assertFalse(exception);
 	}
 	
 	@Test
@@ -43,7 +50,7 @@ public class FileIOUtilsTest {
 			exception = true;
 		}
 		
-		Assert.assertTrue(exception);
+		assertTrue(exception);
 	}
 	
 	@Test
@@ -63,9 +70,9 @@ public class FileIOUtilsTest {
 		String correctString = new String(utf8ByteArray, pair.getFirst(), pair.getSecond(), "UTF-8");
 		System.out.println("correctString:" + correctString);
 		
-		Assert.assertEquals(pair, new Pair<Integer,Integer>(1, 20));
+		assertEquals(pair, new Pair<Integer,Integer>(1, 20));
 		// Two characters stripped from this.
-		Assert.assertEquals(correctString.length(), foreignText.length() - 6);
+		assertEquals(correctString.length(), foreignText.length() - 6);
 		
 	}
 	
@@ -86,9 +93,9 @@ public class FileIOUtilsTest {
 		String correctString = new String(utf8ByteArray, pair.getFirst(), pair.getSecond(), "UTF-8");
 		System.out.println("correctString:" + correctString);
 		
-		Assert.assertEquals(pair, new Pair<Integer,Integer>(3, 40));
+		assertEquals(new Pair<Integer,Integer>(2, 91), pair);
 		// Two characters stripped from this.
-		Assert.assertEquals(correctString.length(), foreignText.length() - 3);
+		assertEquals(foreignText.length() - 4, correctString.length());
 	
 		
 		// Testing mixed bytes
@@ -97,9 +104,9 @@ public class FileIOUtilsTest {
 		Pair<Integer,Integer> pair2 = FileIOUtils.getUtf8Range(mixedBytes, 1, length - 4);
 		correctString = new String(mixedBytes, pair2.getFirst(), pair2.getSecond(), "UTF-8");
 		System.out.println("correctString:" + correctString);
-		Assert.assertEquals(pair2, new Pair<Integer,Integer>(1, 45));
+		assertEquals(pair2, new Pair<Integer,Integer>(1, 95));
 		// Two characters stripped from this.
-		Assert.assertEquals(correctString.length(), mixedText.length() - 3);
+		assertEquals(mixedText.length() - 4, correctString.length());
 		
 	}
 	

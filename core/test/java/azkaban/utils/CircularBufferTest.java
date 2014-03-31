@@ -16,10 +16,9 @@
 package azkaban.utils;
 
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 import java.util.Iterator;
-
-import org.junit.Test;
 
 /**
  * Tests the circular buffer

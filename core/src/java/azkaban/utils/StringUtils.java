@@ -25,6 +25,7 @@ import java.util.Collection;
 public class StringUtils {
 	public static final char SINGLE_QUOTE = '\'';
 	public static final char DOUBLE_QUOTE = '\"';
+	public static final char ESCAPE_CHAR = '\\';
 
 	private StringUtils() {
 	}
@@ -36,20 +37,10 @@ public class StringUtils {
 	 * @param quoteCh
 	 * @return
 	 */
-	public static String shellQuote(String s, char quoteCh) {
-		StringBuffer buf = new StringBuffer(s.length() + 2);
-
-		buf.append(quoteCh);
-		for (int i = 0; i < s.length(); i++) {
-			final char ch = s.charAt(i);
-			if (ch == quoteCh) {
-				buf.append('\\');
-			}
-			buf.append(ch);
-		}
-		buf.append(quoteCh);
-
-		return buf.toString();
+	public static String escapeCharacters(String s, char quoteCh) {	
+		String replace = "" + ESCAPE_CHAR + quoteCh;
+		String quote = "" + quoteCh;
+		return s.replace(quote, replace);
 	}
 
 	/**
@@ -61,6 +52,10 @@ public class StringUtils {
 	 * @return
 	 */
 	public static String join(Collection<String> list, String delimiter) {
+		if (list.isEmpty()) {
+			return "";
+		}
+		
 		StringBuffer buffer = new StringBuffer();
 		for (String str: list) {
 			buffer.append(str);
@@ -68,7 +63,7 @@ public class StringUtils {
 		}
 		
 		if (buffer.length() > 0) {
-			buffer.setLength(buffer.length() - 1);
+			buffer.setLength(buffer.length() - delimiter.length());
 		}
 		
 		return buffer.toString();

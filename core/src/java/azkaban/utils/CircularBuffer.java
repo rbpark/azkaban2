@@ -32,7 +32,6 @@ import com.google.common.collect.Iterators;
  * @param <T> The type of the item contained.
  */
 public class CircularBuffer<T> implements Iterable<T> {
-	
 	private final List<T> lines;
 	private final int size;
 	private int start;
@@ -65,11 +64,11 @@ public class CircularBuffer<T> implements Iterable<T> {
 	}
 	
 	public int getMaxSize() {
-	    return this.size;
+		return this.size;
 	}
 	
 	public int getSize() {
-	    return this.lines.size();
+		return this.lines.size();
 	}
 	
 }

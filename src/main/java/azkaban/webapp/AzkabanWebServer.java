@@ -41,6 +41,9 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.log.Log4JLogChute;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.JarResourceLoader;
+
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.servlet.ServletContainer;
 import org.joda.time.DateTimeZone;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.bio.SocketConnector;
@@ -763,9 +766,18 @@ public class AzkabanWebServer extends AzkabanServer {
 		root.addServlet(new ServletHolder(new JMXHttpServlet()),"/jmx");
 		root.addServlet(new ServletHolder(new TriggerManagerServlet()),"/triggers");
 		
+		// Adding any rest API that we load
+		ResourceConfig rc = new ResourceConfig();
+		rc.packages("azkaban.rest");
+
+		ServletContainer jerseyServletContainer = new ServletContainer(rc);
+		ServletHolder jerseyHolder = new ServletHolder(jerseyServletContainer);
+		jerseyHolder.setInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
+		root.addServlet(jerseyHolder,"/rest/*");
+		
 		String viewerPluginDir = azkabanSettings.getString("viewer.plugin.dir", "plugins/viewer");
 		loadViewerPlugins(root, viewerPluginDir, app.getVelocityEngine());
-		
+
 		// triggerplugin
 		String triggerPluginDir = azkabanSettings.getString("trigger.plugin.dir", "plugins/triggers");
 		Map<String, TriggerPlugin> triggerPlugins = loadTriggerPlugins(root, triggerPluginDir, app);
@@ -1241,5 +1253,9 @@ public class AzkabanWebServer extends AzkabanServer {
 			logger.error(e);
 			return null;
 		}
+	}
+
+	public static AzkabanWebServer getInstance() {
+		return app;
 	}
 }

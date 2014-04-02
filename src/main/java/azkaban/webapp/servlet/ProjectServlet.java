@@ -129,8 +129,7 @@ public class ProjectServlet extends LoginAbstractAzkabanServlet {
 	}
 
 	@Override
-	protected void handlePost(HttpServletRequest req, HttpServletResponse resp,
-			Session session) throws ServletException, IOException {
+	protected void handlePost(HttpServletRequest req, HttpServletResponse resp, Session session) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 

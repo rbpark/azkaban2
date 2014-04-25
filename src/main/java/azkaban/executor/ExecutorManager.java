@@ -59,8 +59,13 @@ import azkaban.utils.Props;
 public class ExecutorManager extends EventHandler implements ExecutorManagerAdapter {
 	private static Logger logger = Logger.getLogger(ExecutorManager.class);
 	private ExecutorLoader executorLoader;
+	
+	// The following will be deprecated
 	private String executorHost;
 	private int executorPort;
+	private List<ConnectionInfo> activeExecutors;
+	private List<ConnectionInfo> inactiveExecutors;
+	private List<ConnectionInfo> deadExecutors;
 	
 	private CleanerThread cleanerThread;
 	
@@ -82,8 +87,10 @@ public class ExecutorManager extends EventHandler implements ExecutorManagerAdap
 	public ExecutorManager(Props props, ExecutorLoader loader, Map<String, Alerter> alters) throws ExecutorManagerException {
 		this.executorLoader = loader;
 		this.loadRunningFlows();
+
 		executorHost = props.getString("executor.host", "localhost");
 		executorPort = props.getInt("executor.port");
+		List<String> executorHosts = props.getStringList("executor.urls", Collections.<String>emptyList());
 		
 		alerters = alters;
 		

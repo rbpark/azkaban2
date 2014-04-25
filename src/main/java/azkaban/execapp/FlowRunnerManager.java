@@ -100,7 +100,9 @@ public class FlowRunnerManager implements EventListener {
 	private boolean validateProxyUser = false;
 	
 	private Object executionDirDeletionSync = new Object();
-		
+
+	private boolean inActive = false;
+	
 	public FlowRunnerManager(Props props, ExecutorLoader executorLoader, ProjectLoader projectLoader, ClassLoader parentClassLoader) throws IOException {
 		executionDirectory = new File(props.getString("azkaban.execution.dir", "executions"));
 		projectDirectory = new File(props.getString("azkaban.project.dir", "projects"));

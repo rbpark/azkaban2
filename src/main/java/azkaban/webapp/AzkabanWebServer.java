@@ -86,6 +86,7 @@ import azkaban.utils.Utils;
 import azkaban.webapp.servlet.AzkabanServletContextListener;
 
 import azkaban.webapp.servlet.AbstractAzkabanServlet;
+import azkaban.webapp.servlet.AdminServlet;
 import azkaban.webapp.servlet.ExecutorServlet;
 import azkaban.webapp.servlet.IndexRedirectServlet;
 import azkaban.webapp.servlet.JMXHttpServlet;
@@ -768,6 +769,7 @@ public class AzkabanWebServer extends AzkabanServer {
 		root.addServlet(new ServletHolder(new ScheduleServlet()),"/schedule");
 		root.addServlet(new ServletHolder(new JMXHttpServlet()),"/jmx");
 		root.addServlet(new ServletHolder(new TriggerManagerServlet()),"/triggers");
+		root.addServlet(new ServletHolder(new AdminServlet()),"/admin");
 
 		ServletHolder restliHolder = new ServletHolder(new RestliServlet());
 		restliHolder.setInitParameter("resourcePackages", "azkaban.restli");
